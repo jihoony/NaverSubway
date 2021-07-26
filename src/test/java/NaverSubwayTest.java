@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class NaverSubwayTest {
@@ -35,4 +36,21 @@ class NaverSubwayTest {
         assertNotNull(fromToDest);
         fromToDest.stream().forEach(System.out::println);
     }
+
+
+    @Test
+    void getUpDirection3() {
+        List<String> destinations = new ArrayList<>();
+        final String stationName = "가산";
+
+        assertThatThrownBy(()->{
+            naverSubway.getFromToDest(stationName, true, destinations);
+        }).isInstanceOf(RuntimeException.class)
+        .hasMessageContaining("No Such SubwayName")
+        .hasMessageContaining(stationName)
+        .hasMessage("No Such SubwayName [" + stationName + "]")
+        ;
+    }
+
+
 }
